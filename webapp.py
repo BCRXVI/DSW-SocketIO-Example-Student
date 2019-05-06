@@ -15,5 +15,14 @@ thread_lock = Lock() #we'll use this lock to prevent multiple clients from modif
 def index():
     return render_template('home.html', async_mode=socketio.async_mode)
 
+@socketio.on('connect')
+def test_connect():
+    global thread #using the thread variable created at the top of the code.
+
+    with thread_lock: #lock the thread so other clients cant change it
+        if thread is None:
+            thread=socketio.start_background_task(target=background_thread)
+        emit('start', 'Connected') #send message to client
+    
 if __name__ == '__main__':
     socketio.run(app, debug=True)
