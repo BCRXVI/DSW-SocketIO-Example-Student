@@ -15,7 +15,9 @@
             // The connection URL has the following format:
             //     http[s]://<domain>:<port>[/<namespace>]
             var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace);
-            
+            socket.on('count_event', function(msg){
+	 	$("log").append('<br>' + msg);  
+	    });
         });
     </script>
 </head>
