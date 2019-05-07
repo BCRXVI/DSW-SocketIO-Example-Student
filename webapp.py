@@ -17,7 +17,7 @@ def index():
 
 def background_thread():
     count = 0
-    whie True:
+    while True:
         socketio.sleep(5)
         count = count + 1
         socketio.emit=('count_event', count)
