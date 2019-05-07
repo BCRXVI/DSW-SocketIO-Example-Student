@@ -22,14 +22,14 @@ def background_thread():
         count = count + 1
         socketio.emit=('count_event', count)
         
-       
 @socketio.on('connect')
 def test_connect():
-    #global thread #using the thread variable created at the top of the code.
+    global thread #using the thread variable created at the top of the code.
 
-    #with thread_lock: #lock the thread so other clients cant change it
-        #if thread is None:
-            #thread=socketio.start_background_task(target=background_thread)
+    with thread_lock: #lock the thread so other clients cant change it
+        if thread is None:
+            thread=socketio.start_background_task(target=background_thread)
+            
         emit('start', 'Connected') #send message to client
     
 if __name__ == '__main__':
